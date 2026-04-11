@@ -1,0 +1,56 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  DOCTOR
+  PATIENT
+}
+
+model User {
+  id         String  @id @default(uuid())
+  email      String  @unique
+  lastName   String  @map("last_name")
+  firstName  String  @map("first_name")
+  middleName String? @map("middle_name")
+  password   String?
+  role       Role    @default(PATIENT)
+
+  isEmailVerified  Boolean   @default(false) @map("is_email_verified")
+  emailOtp         String?   @map("email_otp")
+  emailOtpExpiryAt DateTime? @map("email_otp_expiry_at")
+
+  isTwoFactorEnabled   Boolean  @default(false) @map("is_two_factor_enabled")
+  twoFactorSecret      String?  @map("two_factor_secret")
+  twoFactorBackupCodes String[] @map("two_factor_backup_codes")
+
+  patientConsultations Consultation[] @relation("PatientConsultations")
+  doctorConsultations  Consultation[] @relation("DoctorConsultations")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Consultation {
+  id        String @id @default(uuid())
+  doctorId  String
+  patientId String
+
+  doctor        User    @relation("DoctorConsultations", fields: [doctorId], references: [id])
+  patient       User    @relation("PatientConsultations", fields: [patientId], references: [id])
+  conferenceId  String? @map("conference_id")
+  conferenceUrl String? @map("conference_url")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("consultations")
+}
