@@ -7,7 +7,7 @@ import {
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import type { Request, Response } from "express";
-import { compare } from "bcrypt";
+import { verify } from "argon2";
 
 import { UserService } from "src/user/user.service";
 import { RegisterDto } from "./dto/register.dto";
@@ -34,7 +34,7 @@ export class AuthService {
       throw new NotFoundException("Пользователь не найден");
     }
 
-    const isValidPassword = await compare(user.password, dto.password);
+    const isValidPassword = await verify(user.password, dto.password);
 
     if (!isValidPassword) {
       throw new NotFoundException("Пользователь не найден");
