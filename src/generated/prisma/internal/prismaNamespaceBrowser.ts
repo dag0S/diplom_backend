@@ -52,7 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Consultation: 'Consultation'
+  Consultation: 'Consultation',
+  Otp: 'Otp',
+  TwoFactor: 'TwoFactor'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,13 +80,9 @@ export const UserScalarFieldEnum = {
   firstName: 'firstName',
   middleName: 'middleName',
   password: 'password',
-  role: 'role',
   isEmailVerified: 'isEmailVerified',
-  emailOtp: 'emailOtp',
-  emailOtpExpiryAt: 'emailOtpExpiryAt',
   isTwoFactorEnabled: 'isTwoFactorEnabled',
-  twoFactorSecret: 'twoFactorSecret',
-  twoFactorBackupCodes: 'twoFactorBackupCodes',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -94,15 +92,41 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ConsultationScalarFieldEnum = {
   id: 'id',
-  doctorId: 'doctorId',
-  patientId: 'patientId',
+  recommendations: 'recommendations',
+  comments: 'comments',
   conferenceId: 'conferenceId',
   conferenceUrl: 'conferenceUrl',
+  doctorId: 'doctorId',
+  patientId: 'patientId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ConsultationScalarFieldEnum = (typeof ConsultationScalarFieldEnum)[keyof typeof ConsultationScalarFieldEnum]
+
+
+export const OtpScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  expiresAt: 'expiresAt',
+  isUsed: 'isUsed',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
+
+
+export const TwoFactorScalarFieldEnum = {
+  id: 'id',
+  secret: 'secret',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TwoFactorScalarFieldEnum = (typeof TwoFactorScalarFieldEnum)[keyof typeof TwoFactorScalarFieldEnum]
 
 
 export const SortOrder = {

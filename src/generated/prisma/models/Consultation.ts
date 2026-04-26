@@ -26,30 +26,36 @@ export type AggregateConsultation = {
 
 export type ConsultationMinAggregateOutputType = {
   id: string | null
-  doctorId: string | null
-  patientId: string | null
+  recommendations: string | null
+  comments: string | null
   conferenceId: string | null
   conferenceUrl: string | null
+  doctorId: string | null
+  patientId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type ConsultationMaxAggregateOutputType = {
   id: string | null
-  doctorId: string | null
-  patientId: string | null
+  recommendations: string | null
+  comments: string | null
   conferenceId: string | null
   conferenceUrl: string | null
+  doctorId: string | null
+  patientId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type ConsultationCountAggregateOutputType = {
   id: number
-  doctorId: number
-  patientId: number
+  recommendations: number
+  comments: number
   conferenceId: number
   conferenceUrl: number
+  doctorId: number
+  patientId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -58,30 +64,36 @@ export type ConsultationCountAggregateOutputType = {
 
 export type ConsultationMinAggregateInputType = {
   id?: true
-  doctorId?: true
-  patientId?: true
+  recommendations?: true
+  comments?: true
   conferenceId?: true
   conferenceUrl?: true
+  doctorId?: true
+  patientId?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type ConsultationMaxAggregateInputType = {
   id?: true
-  doctorId?: true
-  patientId?: true
+  recommendations?: true
+  comments?: true
   conferenceId?: true
   conferenceUrl?: true
+  doctorId?: true
+  patientId?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type ConsultationCountAggregateInputType = {
   id?: true
-  doctorId?: true
-  patientId?: true
+  recommendations?: true
+  comments?: true
   conferenceId?: true
   conferenceUrl?: true
+  doctorId?: true
+  patientId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -161,10 +173,12 @@ export type ConsultationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type ConsultationGroupByOutputType = {
   id: string
-  doctorId: string
-  patientId: string
+  recommendations: string | null
+  comments: string | null
   conferenceId: string | null
   conferenceUrl: string | null
+  doctorId: string
+  patientId: string
   createdAt: Date
   updatedAt: Date
   _count: ConsultationCountAggregateOutputType | null
@@ -192,10 +206,12 @@ export type ConsultationWhereInput = {
   OR?: Prisma.ConsultationWhereInput[]
   NOT?: Prisma.ConsultationWhereInput | Prisma.ConsultationWhereInput[]
   id?: Prisma.StringFilter<"Consultation"> | string
-  doctorId?: Prisma.StringFilter<"Consultation"> | string
-  patientId?: Prisma.StringFilter<"Consultation"> | string
+  recommendations?: Prisma.StringNullableFilter<"Consultation"> | string | null
+  comments?: Prisma.StringNullableFilter<"Consultation"> | string | null
   conferenceId?: Prisma.StringNullableFilter<"Consultation"> | string | null
   conferenceUrl?: Prisma.StringNullableFilter<"Consultation"> | string | null
+  doctorId?: Prisma.StringFilter<"Consultation"> | string
+  patientId?: Prisma.StringFilter<"Consultation"> | string
   createdAt?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   doctor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -204,10 +220,12 @@ export type ConsultationWhereInput = {
 
 export type ConsultationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  doctorId?: Prisma.SortOrder
-  patientId?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrderInput | Prisma.SortOrder
+  comments?: Prisma.SortOrderInput | Prisma.SortOrder
   conferenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   conferenceUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  patientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   doctor?: Prisma.UserOrderByWithRelationInput
@@ -219,10 +237,12 @@ export type ConsultationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ConsultationWhereInput | Prisma.ConsultationWhereInput[]
   OR?: Prisma.ConsultationWhereInput[]
   NOT?: Prisma.ConsultationWhereInput | Prisma.ConsultationWhereInput[]
-  doctorId?: Prisma.StringFilter<"Consultation"> | string
-  patientId?: Prisma.StringFilter<"Consultation"> | string
+  recommendations?: Prisma.StringNullableFilter<"Consultation"> | string | null
+  comments?: Prisma.StringNullableFilter<"Consultation"> | string | null
   conferenceId?: Prisma.StringNullableFilter<"Consultation"> | string | null
   conferenceUrl?: Prisma.StringNullableFilter<"Consultation"> | string | null
+  doctorId?: Prisma.StringFilter<"Consultation"> | string
+  patientId?: Prisma.StringFilter<"Consultation"> | string
   createdAt?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   doctor?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -231,10 +251,12 @@ export type ConsultationWhereUniqueInput = Prisma.AtLeast<{
 
 export type ConsultationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  doctorId?: Prisma.SortOrder
-  patientId?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrderInput | Prisma.SortOrder
+  comments?: Prisma.SortOrderInput | Prisma.SortOrder
   conferenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   conferenceUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  patientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ConsultationCountOrderByAggregateInput
@@ -247,16 +269,20 @@ export type ConsultationScalarWhereWithAggregatesInput = {
   OR?: Prisma.ConsultationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ConsultationScalarWhereWithAggregatesInput | Prisma.ConsultationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
-  doctorId?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
-  patientId?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
+  recommendations?: Prisma.StringNullableWithAggregatesFilter<"Consultation"> | string | null
+  comments?: Prisma.StringNullableWithAggregatesFilter<"Consultation"> | string | null
   conferenceId?: Prisma.StringNullableWithAggregatesFilter<"Consultation"> | string | null
   conferenceUrl?: Prisma.StringNullableWithAggregatesFilter<"Consultation"> | string | null
+  doctorId?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
+  patientId?: Prisma.StringWithAggregatesFilter<"Consultation"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Consultation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Consultation"> | Date | string
 }
 
 export type ConsultationCreateInput = {
   id?: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
   createdAt?: Date | string
@@ -267,16 +293,20 @@ export type ConsultationCreateInput = {
 
 export type ConsultationUncheckedCreateInput = {
   id?: string
-  doctorId: string
-  patientId: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
+  doctorId: string
+  patientId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ConsultationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -287,26 +317,32 @@ export type ConsultationUpdateInput = {
 
 export type ConsultationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
-  patientId?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  patientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ConsultationCreateManyInput = {
   id?: string
-  doctorId: string
-  patientId: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
+  doctorId: string
+  patientId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ConsultationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,10 +351,12 @@ export type ConsultationUpdateManyMutationInput = {
 
 export type ConsultationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
-  patientId?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  patientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -335,30 +373,36 @@ export type ConsultationOrderByRelationAggregateInput = {
 
 export type ConsultationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  doctorId?: Prisma.SortOrder
-  patientId?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrder
+  comments?: Prisma.SortOrder
   conferenceId?: Prisma.SortOrder
   conferenceUrl?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  patientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ConsultationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  doctorId?: Prisma.SortOrder
-  patientId?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrder
+  comments?: Prisma.SortOrder
   conferenceId?: Prisma.SortOrder
   conferenceUrl?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  patientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ConsultationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  doctorId?: Prisma.SortOrder
-  patientId?: Prisma.SortOrder
+  recommendations?: Prisma.SortOrder
+  comments?: Prisma.SortOrder
   conferenceId?: Prisma.SortOrder
   conferenceUrl?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  patientId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -449,6 +493,8 @@ export type ConsultationUncheckedUpdateManyWithoutDoctorNestedInput = {
 
 export type ConsultationCreateWithoutPatientInput = {
   id?: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
   createdAt?: Date | string
@@ -458,9 +504,11 @@ export type ConsultationCreateWithoutPatientInput = {
 
 export type ConsultationUncheckedCreateWithoutPatientInput = {
   id?: string
-  doctorId: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
+  doctorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -477,6 +525,8 @@ export type ConsultationCreateManyPatientInputEnvelope = {
 
 export type ConsultationCreateWithoutDoctorInput = {
   id?: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
   createdAt?: Date | string
@@ -486,9 +536,11 @@ export type ConsultationCreateWithoutDoctorInput = {
 
 export type ConsultationUncheckedCreateWithoutDoctorInput = {
   id?: string
-  patientId: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
+  patientId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -524,10 +576,12 @@ export type ConsultationScalarWhereInput = {
   OR?: Prisma.ConsultationScalarWhereInput[]
   NOT?: Prisma.ConsultationScalarWhereInput | Prisma.ConsultationScalarWhereInput[]
   id?: Prisma.StringFilter<"Consultation"> | string
-  doctorId?: Prisma.StringFilter<"Consultation"> | string
-  patientId?: Prisma.StringFilter<"Consultation"> | string
+  recommendations?: Prisma.StringNullableFilter<"Consultation"> | string | null
+  comments?: Prisma.StringNullableFilter<"Consultation"> | string | null
   conferenceId?: Prisma.StringNullableFilter<"Consultation"> | string | null
   conferenceUrl?: Prisma.StringNullableFilter<"Consultation"> | string | null
+  doctorId?: Prisma.StringFilter<"Consultation"> | string
+  patientId?: Prisma.StringFilter<"Consultation"> | string
   createdAt?: Prisma.DateTimeFilter<"Consultation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Consultation"> | Date | string
 }
@@ -550,24 +604,30 @@ export type ConsultationUpdateManyWithWhereWithoutDoctorInput = {
 
 export type ConsultationCreateManyPatientInput = {
   id?: string
-  doctorId: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
+  doctorId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ConsultationCreateManyDoctorInput = {
   id?: string
-  patientId: string
+  recommendations?: string | null
+  comments?: string | null
   conferenceId?: string | null
   conferenceUrl?: string | null
+  patientId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ConsultationUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -577,24 +637,30 @@ export type ConsultationUpdateWithoutPatientInput = {
 
 export type ConsultationUncheckedUpdateWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ConsultationUncheckedUpdateManyWithoutPatientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ConsultationUpdateWithoutDoctorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -604,18 +670,22 @@ export type ConsultationUpdateWithoutDoctorInput = {
 
 export type ConsultationUncheckedUpdateWithoutDoctorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  patientId?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ConsultationUncheckedUpdateManyWithoutDoctorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  patientId?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  comments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   conferenceUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  patientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -624,10 +694,12 @@ export type ConsultationUncheckedUpdateManyWithoutDoctorInput = {
 
 export type ConsultationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  doctorId?: boolean
-  patientId?: boolean
+  recommendations?: boolean
+  comments?: boolean
   conferenceId?: boolean
   conferenceUrl?: boolean
+  doctorId?: boolean
+  patientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   doctor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -636,10 +708,12 @@ export type ConsultationSelect<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ConsultationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  doctorId?: boolean
-  patientId?: boolean
+  recommendations?: boolean
+  comments?: boolean
   conferenceId?: boolean
   conferenceUrl?: boolean
+  doctorId?: boolean
+  patientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   doctor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -648,10 +722,12 @@ export type ConsultationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 
 export type ConsultationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  doctorId?: boolean
-  patientId?: boolean
+  recommendations?: boolean
+  comments?: boolean
   conferenceId?: boolean
   conferenceUrl?: boolean
+  doctorId?: boolean
+  patientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   doctor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -660,15 +736,17 @@ export type ConsultationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 
 export type ConsultationSelectScalar = {
   id?: boolean
-  doctorId?: boolean
-  patientId?: boolean
+  recommendations?: boolean
+  comments?: boolean
   conferenceId?: boolean
   conferenceUrl?: boolean
+  doctorId?: boolean
+  patientId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ConsultationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "doctorId" | "patientId" | "conferenceId" | "conferenceUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["consultation"]>
+export type ConsultationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "recommendations" | "comments" | "conferenceId" | "conferenceUrl" | "doctorId" | "patientId" | "createdAt" | "updatedAt", ExtArgs["result"]["consultation"]>
 export type ConsultationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   doctor?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   patient?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -690,10 +768,12 @@ export type $ConsultationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    doctorId: string
-    patientId: string
+    recommendations: string | null
+    comments: string | null
     conferenceId: string | null
     conferenceUrl: string | null
+    doctorId: string
+    patientId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["consultation"]>
@@ -1122,10 +1202,12 @@ export interface Prisma__ConsultationClient<T, Null = never, ExtArgs extends run
  */
 export interface ConsultationFieldRefs {
   readonly id: Prisma.FieldRef<"Consultation", 'String'>
-  readonly doctorId: Prisma.FieldRef<"Consultation", 'String'>
-  readonly patientId: Prisma.FieldRef<"Consultation", 'String'>
+  readonly recommendations: Prisma.FieldRef<"Consultation", 'String'>
+  readonly comments: Prisma.FieldRef<"Consultation", 'String'>
   readonly conferenceId: Prisma.FieldRef<"Consultation", 'String'>
   readonly conferenceUrl: Prisma.FieldRef<"Consultation", 'String'>
+  readonly doctorId: Prisma.FieldRef<"Consultation", 'String'>
+  readonly patientId: Prisma.FieldRef<"Consultation", 'String'>
   readonly createdAt: Prisma.FieldRef<"Consultation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Consultation", 'DateTime'>
 }

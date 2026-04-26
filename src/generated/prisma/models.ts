@@ -10,4 +10,6 @@
  */
 export type * from './models/User'
 export type * from './models/Consultation'
+export type * from './models/Otp'
+export type * from './models/TwoFactor'
 export type * from './commonInputTypes'

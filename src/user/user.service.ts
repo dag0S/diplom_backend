@@ -11,6 +11,9 @@ export class UserService {
   async getById(id: string) {
     return await this.prismaService.user.findUnique({
       where: { id },
+      omit: {
+        password: true,
+      },
     });
   }
 
@@ -31,6 +34,24 @@ export class UserService {
         middleName,
         role,
         password: await hash(password),
+      },
+    });
+  }
+
+  async verifyEmail(userId: string) {
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        isEmailVerified: true,
+      },
+    });
+  }
+
+  async setIsTwoFactorEnabled(userId: string, isTwoFactorEnabled: boolean) {
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: {
+        isTwoFactorEnabled,
       },
     });
   }

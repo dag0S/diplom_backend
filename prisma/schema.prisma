@@ -14,21 +14,18 @@ enum Role {
 }
 
 model User {
-  id         String  @id @default(uuid())
-  email      String  @unique
-  lastName   String  @map("last_name")
-  firstName  String  @map("first_name")
-  middleName String? @map("middle_name")
-  password   String?
-  role       Role    @default(PATIENT)
+  id                 String  @id @default(uuid())
+  email              String  @unique
+  lastName           String  @map("last_name")
+  firstName          String  @map("first_name")
+  middleName         String? @map("middle_name")
+  password           String?
+  isEmailVerified    Boolean @default(false) @map("is_email_verified")
+  isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
+  role               Role    @default(PATIENT)
 
-  isEmailVerified  Boolean   @default(false) @map("is_email_verified")
-  emailOtp         String?   @map("email_otp")
-  emailOtpExpiryAt DateTime? @map("email_otp_expiry_at")
-
-  isTwoFactorEnabled   Boolean  @default(false) @map("is_two_factor_enabled")
-  twoFactorSecret      String?  @map("two_factor_secret")
-  twoFactorBackupCodes String[] @map("two_factor_backup_codes")
+  otps      Otp[]
+  twoFactor TwoFactor?
 
   patientConsultations Consultation[] @relation("PatientConsultations")
   doctorConsultations  Consultation[] @relation("DoctorConsultations")
@@ -40,17 +37,48 @@ model User {
 }
 
 model Consultation {
-  id        String @id @default(uuid())
-  doctorId  String
-  patientId String
+  id              String  @id @default(uuid())
+  recommendations String?
+  comments        String?
+  conferenceId    String? @map("conference_id")
+  conferenceUrl   String? @map("conference_url")
 
-  doctor        User    @relation("DoctorConsultations", fields: [doctorId], references: [id])
-  patient       User    @relation("PatientConsultations", fields: [patientId], references: [id])
-  conferenceId  String? @map("conference_id")
-  conferenceUrl String? @map("conference_url")
+  doctorId String @map("doctor_id")
+  doctor   User   @relation("DoctorConsultations", fields: [doctorId], references: [id])
+
+  patientId String @map("patient_id")
+  patient   User   @relation("PatientConsultations", fields: [patientId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("consultations")
+}
+
+model Otp {
+  id        String   @id @default(uuid())
+  code      String
+  expiresAt DateTime @map("expires_at")
+  isUsed    Boolean  @default(false) @map("is_used")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("otps")
+}
+
+model TwoFactor {
+  id     String @id @default(uuid())
+  secret String
+
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("two_factor")
 }

@@ -12,8 +12,16 @@ import { verify } from "argon2";
 import { UserService } from "src/user/user.service";
 import { RegisterDto } from "./dto/register.dto";
 import { AuthDto } from "./dto/auth.dto";
-import { JwtPayload } from "./interfaces/jwt.interface";
+import type { JwtPayload } from "./interfaces/jwt.interface";
 import { isDev } from "src/common/utils/is-dev.util";
+import { OtpService } from "src/otp/otp.service";
+import { EmailService } from "src/email/email.service";
+import { SendEmailDto } from "src/email/dto/email.dto";
+import type { User } from "src/generated/prisma/client";
+import { VerifyOtpDto } from "./dto/verify-otp.dto";
+import { SendOtpDto } from "./dto/send-otp.dto";
+import { TotpService } from "src/totp/totp.service";
+import { Verify2FADto } from "./dto/verify-2fa.dto";
 
 @Injectable()
 export class AuthService {
@@ -23,6 +31,9 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
+    private readonly otpService: OtpService,
+    private readonly totpService: TotpService,
+    private readonly emailService: EmailService,
   ) {
     this.COOKIE_DOMAIN = configService.getOrThrow<string>("COOKIE_DOMAIN");
   }
@@ -40,10 +51,18 @@ export class AuthService {
       throw new NotFoundException("Пользователь не найден");
     }
 
+    if (!user.isEmailVerified) {
+      throw new UnauthorizedException("Почта не подтверждена");
+    }
+
+    if (!user.isTwoFactorEnabled) {
+      throw new UnauthorizedException("Включена двухфакторная аутентификация");
+    }
+
     return this.auth(res, user.id);
   }
 
-  async register(res: Response, dto: RegisterDto) {
+  async register(dto: RegisterDto) {
     const existedUser = await this.userService.getByEmail(dto.email);
 
     if (existedUser)
@@ -51,7 +70,33 @@ export class AuthService {
 
     const user = await this.userService.create(dto);
 
+    return this.emailVerify(user);
+  }
+
+  async verifyOtp(res: Response, dto: VerifyOtpDto) {
+    const { otp, email } = dto;
+
+    const user = await this.userService.getByEmail(email);
+
+    if (!user) {
+      throw new NotFoundException("Пользователь не найден");
+    }
+
+    await this.otpService.validateOtp(user.id, otp);
+
+    await this.userService.verifyEmail(user.id);
+
     return this.auth(res, user.id);
+  }
+
+  async sendOtp(dto: SendOtpDto) {
+    const { email } = dto;
+
+    const user = await this.userService.getByEmail(email);
+
+    if (!user) throw new NotFoundException("Пользователь не найден");
+
+    return await this.emailVerify(user);
   }
 
   async refresh(req: Request, res: Response) {
@@ -88,6 +133,52 @@ export class AuthService {
     this.setCookie(res, "", new Date(0));
 
     return { message: "Успешный выход" };
+  }
+
+  async enable2FA(userId: string) {
+    const user = await this.userService.getById(userId);
+
+    if (!user) {
+      throw new NotFoundException("Пользователь не найден");
+    }
+
+    const qr = await this.totpService.generateSecret(user.id);
+    await this.userService.setIsTwoFactorEnabled(user.id, true);
+
+    return { qr };
+  }
+
+  async verify2FA(res: Response, dto: Verify2FADto) {
+    const { token, email } = dto;
+
+    const user = await this.userService.getByEmail(email);
+
+    if (!user) {
+      throw new NotFoundException("Пользователь не найден");
+    }
+
+    await this.totpService.validateTotp(user.id, token);
+
+    return this.auth(res, user.id);
+  }
+
+  async disable2FA(userId: string) {
+    const user = await this.userService.getById(userId);
+
+    if (!user) {
+      throw new NotFoundException("Пользователь не найден");
+    }
+
+    if (!user.isTwoFactorEnabled) {
+      throw new BadRequestException(
+        "Двухфакторная аутентификация уже выключена",
+      );
+    }
+
+    await this.userService.setIsTwoFactorEnabled(user.id, false);
+    await this.totpService.deleteSecret(user.id);
+
+    return { message: "Двухфакторная аутентификация выключена" };
   }
 
   private generateTokens(id: string) {
@@ -129,27 +220,17 @@ export class AuthService {
     return { accessToken };
   }
 
-  addRefreshTokenToResponse(res: Response, refreshToken: string) {
-    const expiresIn = new Date();
+  private async emailVerify(user: User) {
+    const otp = await this.otpService.generateOTP(user.id);
 
-    expiresIn.setDate(expiresIn.getDate() + 7);
+    const emailDto: SendEmailDto = {
+      recipients: [user.email],
+      subject: "Подтверждение почты",
+      html: `Ваш одноразовый код для подтверждения email: ${otp}<br/><br/>Срок действия кода: 24 часа.`,
+    };
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      domain: this.configService.getOrThrow<string>("SERVER_DOMAIN"),
-      expires: expiresIn,
-      secure: true,
-      sameSite: "none",
-    });
-  }
+    await this.emailService.sendEmail(emailDto);
 
-  removeRefreshTokenFromResponse(res: Response) {
-    res.cookie("refreshToken", "", {
-      httpOnly: true,
-      domain: this.configService.getOrThrow<string>("SERVER_DOMAIN"),
-      expires: new Date(0),
-      secure: true,
-      sameSite: "none",
-    });
+    return { message: `Код подтверждения отправлен на почту ${user.email}` };
   }
 }

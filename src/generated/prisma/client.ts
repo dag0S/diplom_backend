@@ -49,3 +49,13 @@ export type User = Prisma.UserModel
  * 
  */
 export type Consultation = Prisma.ConsultationModel
+/**
+ * Model Otp
+ * 
+ */
+export type Otp = Prisma.OtpModel
+/**
+ * Model TwoFactor
+ * 
+ */
+export type TwoFactor = Prisma.TwoFactorModel

@@ -31,12 +31,9 @@ export type UserMinAggregateOutputType = {
   firstName: string | null
   middleName: string | null
   password: string | null
-  role: $Enums.Role | null
   isEmailVerified: boolean | null
-  emailOtp: string | null
-  emailOtpExpiryAt: Date | null
   isTwoFactorEnabled: boolean | null
-  twoFactorSecret: string | null
+  role: $Enums.Role | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,12 +45,9 @@ export type UserMaxAggregateOutputType = {
   firstName: string | null
   middleName: string | null
   password: string | null
-  role: $Enums.Role | null
   isEmailVerified: boolean | null
-  emailOtp: string | null
-  emailOtpExpiryAt: Date | null
   isTwoFactorEnabled: boolean | null
-  twoFactorSecret: string | null
+  role: $Enums.Role | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,13 +59,9 @@ export type UserCountAggregateOutputType = {
   firstName: number
   middleName: number
   password: number
-  role: number
   isEmailVerified: number
-  emailOtp: number
-  emailOtpExpiryAt: number
   isTwoFactorEnabled: number
-  twoFactorSecret: number
-  twoFactorBackupCodes: number
+  role: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -85,12 +75,9 @@ export type UserMinAggregateInputType = {
   firstName?: true
   middleName?: true
   password?: true
-  role?: true
   isEmailVerified?: true
-  emailOtp?: true
-  emailOtpExpiryAt?: true
   isTwoFactorEnabled?: true
-  twoFactorSecret?: true
+  role?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,12 +89,9 @@ export type UserMaxAggregateInputType = {
   firstName?: true
   middleName?: true
   password?: true
-  role?: true
   isEmailVerified?: true
-  emailOtp?: true
-  emailOtpExpiryAt?: true
   isTwoFactorEnabled?: true
-  twoFactorSecret?: true
+  role?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -119,13 +103,9 @@ export type UserCountAggregateInputType = {
   firstName?: true
   middleName?: true
   password?: true
-  role?: true
   isEmailVerified?: true
-  emailOtp?: true
-  emailOtpExpiryAt?: true
   isTwoFactorEnabled?: true
-  twoFactorSecret?: true
-  twoFactorBackupCodes?: true
+  role?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -210,13 +190,9 @@ export type UserGroupByOutputType = {
   firstName: string
   middleName: string | null
   password: string | null
-  role: $Enums.Role
   isEmailVerified: boolean
-  emailOtp: string | null
-  emailOtpExpiryAt: Date | null
   isTwoFactorEnabled: boolean
-  twoFactorSecret: string | null
-  twoFactorBackupCodes: string[]
+  role: $Enums.Role
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -249,15 +225,13 @@ export type UserWhereInput = {
   firstName?: Prisma.StringFilter<"User"> | string
   middleName?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailOtp?: Prisma.StringNullableFilter<"User"> | string | null
-  emailOtpExpiryAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFilter<"User"> | boolean
-  twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
-  twoFactorBackupCodes?: Prisma.StringNullableListFilter<"User">
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  otps?: Prisma.OtpListRelationFilter
+  twoFactor?: Prisma.XOR<Prisma.TwoFactorNullableScalarRelationFilter, Prisma.TwoFactorWhereInput> | null
   patientConsultations?: Prisma.ConsultationListRelationFilter
   doctorConsultations?: Prisma.ConsultationListRelationFilter
 }
@@ -269,15 +243,13 @@ export type UserOrderByWithRelationInput = {
   firstName?: Prisma.SortOrder
   middleName?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
-  role?: Prisma.SortOrder
   isEmailVerified?: Prisma.SortOrder
-  emailOtp?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailOtpExpiryAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
-  twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
-  twoFactorBackupCodes?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  otps?: Prisma.OtpOrderByRelationAggregateInput
+  twoFactor?: Prisma.TwoFactorOrderByWithRelationInput
   patientConsultations?: Prisma.ConsultationOrderByRelationAggregateInput
   doctorConsultations?: Prisma.ConsultationOrderByRelationAggregateInput
 }
@@ -292,15 +264,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   firstName?: Prisma.StringFilter<"User"> | string
   middleName?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailOtp?: Prisma.StringNullableFilter<"User"> | string | null
-  emailOtpExpiryAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFilter<"User"> | boolean
-  twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
-  twoFactorBackupCodes?: Prisma.StringNullableListFilter<"User">
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  otps?: Prisma.OtpListRelationFilter
+  twoFactor?: Prisma.XOR<Prisma.TwoFactorNullableScalarRelationFilter, Prisma.TwoFactorWhereInput> | null
   patientConsultations?: Prisma.ConsultationListRelationFilter
   doctorConsultations?: Prisma.ConsultationListRelationFilter
 }, "id" | "email">
@@ -312,13 +282,9 @@ export type UserOrderByWithAggregationInput = {
   firstName?: Prisma.SortOrder
   middleName?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
-  role?: Prisma.SortOrder
   isEmailVerified?: Prisma.SortOrder
-  emailOtp?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailOtpExpiryAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
-  twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
-  twoFactorBackupCodes?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -336,13 +302,9 @@ export type UserScalarWhereWithAggregatesInput = {
   firstName?: Prisma.StringWithAggregatesFilter<"User"> | string
   middleName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isEmailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  emailOtp?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  emailOtpExpiryAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  twoFactorSecret?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  twoFactorBackupCodes?: Prisma.StringNullableListFilter<"User">
+  role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -354,15 +316,13 @@ export type UserCreateInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorCreateNestedOneWithoutUserInput
   patientConsultations?: Prisma.ConsultationCreateNestedManyWithoutPatientInput
   doctorConsultations?: Prisma.ConsultationCreateNestedManyWithoutDoctorInput
 }
@@ -374,15 +334,13 @@ export type UserUncheckedCreateInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorUncheckedCreateNestedOneWithoutUserInput
   patientConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutPatientInput
   doctorConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutDoctorInput
 }
@@ -394,15 +352,13 @@ export type UserUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorUpdateOneWithoutUserNestedInput
   patientConsultations?: Prisma.ConsultationUpdateManyWithoutPatientNestedInput
   doctorConsultations?: Prisma.ConsultationUpdateManyWithoutDoctorNestedInput
 }
@@ -414,15 +370,13 @@ export type UserUncheckedUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorUncheckedUpdateOneWithoutUserNestedInput
   patientConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutPatientNestedInput
   doctorConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutDoctorNestedInput
 }
@@ -434,13 +388,9 @@ export type UserCreateManyInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -452,13 +402,9 @@ export type UserUpdateManyMutationInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -470,23 +416,11 @@ export type UserUncheckedUpdateManyInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -496,13 +430,9 @@ export type UserCountOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   middleName?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isEmailVerified?: Prisma.SortOrder
-  emailOtp?: Prisma.SortOrder
-  emailOtpExpiryAt?: Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
-  twoFactorSecret?: Prisma.SortOrder
-  twoFactorBackupCodes?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -514,12 +444,9 @@ export type UserMaxOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   middleName?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isEmailVerified?: Prisma.SortOrder
-  emailOtp?: Prisma.SortOrder
-  emailOtpExpiryAt?: Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
-  twoFactorSecret?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -531,12 +458,9 @@ export type UserMinOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   middleName?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  role?: Prisma.SortOrder
   isEmailVerified?: Prisma.SortOrder
-  emailOtp?: Prisma.SortOrder
-  emailOtpExpiryAt?: Prisma.SortOrder
   isTwoFactorEnabled?: Prisma.SortOrder
-  twoFactorSecret?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -544,10 +468,6 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
-}
-
-export type UserCreatetwoFactorBackupCodesInput = {
-  set: string[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -558,21 +478,12 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type EnumRoleFieldUpdateOperationsInput = {
-  set?: $Enums.Role
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type UserUpdatetwoFactorBackupCodesInput = {
-  set?: string[]
-  push?: string | string[]
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: $Enums.Role
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -607,6 +518,34 @@ export type UserUpdateOneRequiredWithoutPatientConsultationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPatientConsultationsInput, Prisma.UserUpdateWithoutPatientConsultationsInput>, Prisma.UserUncheckedUpdateWithoutPatientConsultationsInput>
 }
 
+export type UserCreateNestedOneWithoutOtpsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOtpsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutOtpsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOtpsInput
+  upsert?: Prisma.UserUpsertWithoutOtpsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOtpsInput, Prisma.UserUpdateWithoutOtpsInput>, Prisma.UserUncheckedUpdateWithoutOtpsInput>
+}
+
+export type UserCreateNestedOneWithoutTwoFactorInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTwoFactorInput, Prisma.UserUncheckedCreateWithoutTwoFactorInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTwoFactorInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTwoFactorNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTwoFactorInput, Prisma.UserUncheckedCreateWithoutTwoFactorInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTwoFactorInput
+  upsert?: Prisma.UserUpsertWithoutTwoFactorInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTwoFactorInput, Prisma.UserUpdateWithoutTwoFactorInput>, Prisma.UserUncheckedUpdateWithoutTwoFactorInput>
+}
+
 export type UserCreateWithoutDoctorConsultationsInput = {
   id?: string
   email: string
@@ -614,15 +553,13 @@ export type UserCreateWithoutDoctorConsultationsInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorCreateNestedOneWithoutUserInput
   patientConsultations?: Prisma.ConsultationCreateNestedManyWithoutPatientInput
 }
 
@@ -633,15 +570,13 @@ export type UserUncheckedCreateWithoutDoctorConsultationsInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorUncheckedCreateNestedOneWithoutUserInput
   patientConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutPatientInput
 }
 
@@ -657,15 +592,13 @@ export type UserCreateWithoutPatientConsultationsInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorCreateNestedOneWithoutUserInput
   doctorConsultations?: Prisma.ConsultationCreateNestedManyWithoutDoctorInput
 }
 
@@ -676,15 +609,13 @@ export type UserUncheckedCreateWithoutPatientConsultationsInput = {
   firstName: string
   middleName?: string | null
   password?: string | null
-  role?: $Enums.Role
   isEmailVerified?: boolean
-  emailOtp?: string | null
-  emailOtpExpiryAt?: Date | string | null
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: string | null
-  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  role?: $Enums.Role
   createdAt?: Date | string
   updatedAt?: Date | string
+  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  twoFactor?: Prisma.TwoFactorUncheckedCreateNestedOneWithoutUserInput
   doctorConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutDoctorInput
 }
 
@@ -711,15 +642,13 @@ export type UserUpdateWithoutDoctorConsultationsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorUpdateOneWithoutUserNestedInput
   patientConsultations?: Prisma.ConsultationUpdateManyWithoutPatientNestedInput
 }
 
@@ -730,15 +659,13 @@ export type UserUncheckedUpdateWithoutDoctorConsultationsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorUncheckedUpdateOneWithoutUserNestedInput
   patientConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutPatientNestedInput
 }
 
@@ -760,15 +687,13 @@ export type UserUpdateWithoutPatientConsultationsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorUpdateOneWithoutUserNestedInput
   doctorConsultations?: Prisma.ConsultationUpdateManyWithoutDoctorNestedInput
 }
 
@@ -779,15 +704,181 @@ export type UserUncheckedUpdateWithoutPatientConsultationsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailOtp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailOtpExpiryAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  twoFactor?: Prisma.TwoFactorUncheckedUpdateOneWithoutUserNestedInput
+  doctorConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutDoctorNestedInput
+}
+
+export type UserCreateWithoutOtpsInput = {
+  id?: string
+  email: string
+  lastName: string
+  firstName: string
+  middleName?: string | null
+  password?: string | null
+  isEmailVerified?: boolean
+  isTwoFactorEnabled?: boolean
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  twoFactor?: Prisma.TwoFactorCreateNestedOneWithoutUserInput
+  patientConsultations?: Prisma.ConsultationCreateNestedManyWithoutPatientInput
+  doctorConsultations?: Prisma.ConsultationCreateNestedManyWithoutDoctorInput
+}
+
+export type UserUncheckedCreateWithoutOtpsInput = {
+  id?: string
+  email: string
+  lastName: string
+  firstName: string
+  middleName?: string | null
+  password?: string | null
+  isEmailVerified?: boolean
+  isTwoFactorEnabled?: boolean
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  twoFactor?: Prisma.TwoFactorUncheckedCreateNestedOneWithoutUserInput
+  patientConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutPatientInput
+  doctorConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutDoctorInput
+}
+
+export type UserCreateOrConnectWithoutOtpsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
+}
+
+export type UserUpsertWithoutOtpsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOtpsInput, Prisma.UserUncheckedUpdateWithoutOtpsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOtpsInput, Prisma.UserUncheckedCreateWithoutOtpsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutOtpsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOtpsInput, Prisma.UserUncheckedUpdateWithoutOtpsInput>
+}
+
+export type UserUpdateWithoutOtpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  twoFactor?: Prisma.TwoFactorUpdateOneWithoutUserNestedInput
+  patientConsultations?: Prisma.ConsultationUpdateManyWithoutPatientNestedInput
+  doctorConsultations?: Prisma.ConsultationUpdateManyWithoutDoctorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOtpsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  twoFactor?: Prisma.TwoFactorUncheckedUpdateOneWithoutUserNestedInput
+  patientConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutPatientNestedInput
+  doctorConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutDoctorNestedInput
+}
+
+export type UserCreateWithoutTwoFactorInput = {
+  id?: string
+  email: string
+  lastName: string
+  firstName: string
+  middleName?: string | null
+  password?: string | null
+  isEmailVerified?: boolean
+  isTwoFactorEnabled?: boolean
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otps?: Prisma.OtpCreateNestedManyWithoutUserInput
+  patientConsultations?: Prisma.ConsultationCreateNestedManyWithoutPatientInput
+  doctorConsultations?: Prisma.ConsultationCreateNestedManyWithoutDoctorInput
+}
+
+export type UserUncheckedCreateWithoutTwoFactorInput = {
+  id?: string
+  email: string
+  lastName: string
+  firstName: string
+  middleName?: string | null
+  password?: string | null
+  isEmailVerified?: boolean
+  isTwoFactorEnabled?: boolean
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otps?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  patientConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutPatientInput
+  doctorConsultations?: Prisma.ConsultationUncheckedCreateNestedManyWithoutDoctorInput
+}
+
+export type UserCreateOrConnectWithoutTwoFactorInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTwoFactorInput, Prisma.UserUncheckedCreateWithoutTwoFactorInput>
+}
+
+export type UserUpsertWithoutTwoFactorInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTwoFactorInput, Prisma.UserUncheckedUpdateWithoutTwoFactorInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTwoFactorInput, Prisma.UserUncheckedCreateWithoutTwoFactorInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTwoFactorInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTwoFactorInput, Prisma.UserUncheckedUpdateWithoutTwoFactorInput>
+}
+
+export type UserUpdateWithoutTwoFactorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  patientConsultations?: Prisma.ConsultationUpdateManyWithoutPatientNestedInput
+  doctorConsultations?: Prisma.ConsultationUpdateManyWithoutDoctorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTwoFactorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  middleName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otps?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  patientConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutPatientNestedInput
   doctorConsultations?: Prisma.ConsultationUncheckedUpdateManyWithoutDoctorNestedInput
 }
 
@@ -797,11 +888,13 @@ export type UserUncheckedUpdateWithoutPatientConsultationsInput = {
  */
 
 export type UserCountOutputType = {
+  otps: number
   patientConsultations: number
   doctorConsultations: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  otps?: boolean | UserCountOutputTypeCountOtpsArgs
   patientConsultations?: boolean | UserCountOutputTypeCountPatientConsultationsArgs
   doctorConsultations?: boolean | UserCountOutputTypeCountDoctorConsultationsArgs
 }
@@ -814,6 +907,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOtpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OtpWhereInput
 }
 
 /**
@@ -838,15 +938,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   firstName?: boolean
   middleName?: boolean
   password?: boolean
-  role?: boolean
   isEmailVerified?: boolean
-  emailOtp?: boolean
-  emailOtpExpiryAt?: boolean
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: boolean
-  twoFactorBackupCodes?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
+  twoFactor?: boolean | Prisma.User$twoFactorArgs<ExtArgs>
   patientConsultations?: boolean | Prisma.User$patientConsultationsArgs<ExtArgs>
   doctorConsultations?: boolean | Prisma.User$doctorConsultationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -859,13 +957,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   firstName?: boolean
   middleName?: boolean
   password?: boolean
-  role?: boolean
   isEmailVerified?: boolean
-  emailOtp?: boolean
-  emailOtpExpiryAt?: boolean
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: boolean
-  twoFactorBackupCodes?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -877,13 +971,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   firstName?: boolean
   middleName?: boolean
   password?: boolean
-  role?: boolean
   isEmailVerified?: boolean
-  emailOtp?: boolean
-  emailOtpExpiryAt?: boolean
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: boolean
-  twoFactorBackupCodes?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -895,19 +985,17 @@ export type UserSelectScalar = {
   firstName?: boolean
   middleName?: boolean
   password?: boolean
-  role?: boolean
   isEmailVerified?: boolean
-  emailOtp?: boolean
-  emailOtpExpiryAt?: boolean
   isTwoFactorEnabled?: boolean
-  twoFactorSecret?: boolean
-  twoFactorBackupCodes?: boolean
+  role?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "lastName" | "firstName" | "middleName" | "password" | "role" | "isEmailVerified" | "emailOtp" | "emailOtpExpiryAt" | "isTwoFactorEnabled" | "twoFactorSecret" | "twoFactorBackupCodes" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "lastName" | "firstName" | "middleName" | "password" | "isEmailVerified" | "isTwoFactorEnabled" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
+  twoFactor?: boolean | Prisma.User$twoFactorArgs<ExtArgs>
   patientConsultations?: boolean | Prisma.User$patientConsultationsArgs<ExtArgs>
   doctorConsultations?: boolean | Prisma.User$doctorConsultationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -918,6 +1006,8 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    otps: Prisma.$OtpPayload<ExtArgs>[]
+    twoFactor: Prisma.$TwoFactorPayload<ExtArgs> | null
     patientConsultations: Prisma.$ConsultationPayload<ExtArgs>[]
     doctorConsultations: Prisma.$ConsultationPayload<ExtArgs>[]
   }
@@ -928,13 +1018,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     firstName: string
     middleName: string | null
     password: string | null
-    role: $Enums.Role
     isEmailVerified: boolean
-    emailOtp: string | null
-    emailOtpExpiryAt: Date | null
     isTwoFactorEnabled: boolean
-    twoFactorSecret: string | null
-    twoFactorBackupCodes: string[]
+    role: $Enums.Role
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1331,6 +1417,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  otps<T extends Prisma.User$otpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  twoFactor<T extends Prisma.User$twoFactorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$twoFactorArgs<ExtArgs>>): Prisma.Prisma__TwoFactorClient<runtime.Types.Result.GetResult<Prisma.$TwoFactorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   patientConsultations<T extends Prisma.User$patientConsultationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$patientConsultationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConsultationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   doctorConsultations<T extends Prisma.User$doctorConsultationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$doctorConsultationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConsultationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1368,13 +1456,9 @@ export interface UserFieldRefs {
   readonly firstName: Prisma.FieldRef<"User", 'String'>
   readonly middleName: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly isEmailVerified: Prisma.FieldRef<"User", 'Boolean'>
-  readonly emailOtp: Prisma.FieldRef<"User", 'String'>
-  readonly emailOtpExpiryAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly isTwoFactorEnabled: Prisma.FieldRef<"User", 'Boolean'>
-  readonly twoFactorSecret: Prisma.FieldRef<"User", 'String'>
-  readonly twoFactorBackupCodes: Prisma.FieldRef<"User", 'String[]'>
+  readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1767,6 +1851,49 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.otps
+ */
+export type User$otpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Otp
+   */
+  select?: Prisma.OtpSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Otp
+   */
+  omit?: Prisma.OtpOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OtpInclude<ExtArgs> | null
+  where?: Prisma.OtpWhereInput
+  orderBy?: Prisma.OtpOrderByWithRelationInput | Prisma.OtpOrderByWithRelationInput[]
+  cursor?: Prisma.OtpWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OtpScalarFieldEnum | Prisma.OtpScalarFieldEnum[]
+}
+
+/**
+ * User.twoFactor
+ */
+export type User$twoFactorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TwoFactor
+   */
+  select?: Prisma.TwoFactorSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TwoFactor
+   */
+  omit?: Prisma.TwoFactorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TwoFactorInclude<ExtArgs> | null
+  where?: Prisma.TwoFactorWhereInput
 }
 
 /**
