@@ -3,16 +3,32 @@ import { hash } from "argon2";
 
 import { RegisterDto } from "src/auth/dto/register.dto";
 import { PrismaService } from "src/prisma/prisma.service";
+import type { GetByIdOptions } from "./interfaces/get-by-id-options.interface";
 
 @Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getById(id: string) {
+  async getById(id: string, options?: GetByIdOptions) {
     return await this.prismaService.user.findUnique({
       where: { id },
-      omit: {
-        password: true,
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        middleName: true,
+        role: true,
+        isEmailVerified: true,
+        isTwoFactorEnabled: true,
+        twoFactor: options?.twoFactor
+          ? {
+              select: {
+                id: true,
+                secret: true,
+              },
+            }
+          : false,
       },
     });
   }

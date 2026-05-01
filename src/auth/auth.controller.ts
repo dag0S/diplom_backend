@@ -49,18 +49,25 @@ export class AuthController {
     return this.authService.sendOtp(dto);
   }
 
+  @Post("setup-2fa")
+  @JwtAuth()
+  @HttpCode(HttpStatus.OK)
+  setup2FA(@CurrentUser("id") userId: string) {
+    return this.authService.setup2FA(userId);
+  }
+
   @Post("enable-2fa")
   @JwtAuth()
   @HttpCode(HttpStatus.OK)
-  enable2FA(@CurrentUser("id") userId: string) {
-    return this.authService.enable2FA(userId);
+  enable2FA(@Body() dto: Verify2FADto) {
+    return this.authService.enable2FA(dto);
   }
 
   @Post("disable-2fa")
   @JwtAuth()
   @HttpCode(HttpStatus.OK)
-  disable2FA(@CurrentUser("id") userId: string) {
-    return this.authService.disable2FA(userId);
+  disable2FA(@Body() dto: Verify2FADto) {
+    return this.authService.disable2FA(dto);
   }
 
   @Post("verify-2fa")

@@ -8,6 +8,7 @@ import { AuthModule } from "./auth/auth.module";
 import { OtpModule } from './otp/otp.module';
 import { EmailModule } from './email/email.module';
 import { TotpModule } from './totp/totp.module';
+import { CryptoModule } from './crypto/crypto.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TotpModule } from './totp/totp.module';
     OtpModule,
     EmailModule,
     TotpModule,
+    CryptoModule,
   ],
 })
 export class AppModule {}

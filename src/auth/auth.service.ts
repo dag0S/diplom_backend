@@ -55,7 +55,7 @@ export class AuthService {
       throw new UnauthorizedException("Почта не подтверждена");
     }
 
-    if (!user.isTwoFactorEnabled) {
+    if (user.isTwoFactorEnabled) {
       throw new UnauthorizedException("Включена двухфакторная аутентификация");
     }
 
@@ -135,34 +135,59 @@ export class AuthService {
     return { message: "Успешный выход" };
   }
 
-  async enable2FA(userId: string) {
+  async setup2FA(userId: string) {
     const user = await this.userService.getById(userId);
 
     if (!user) {
       throw new NotFoundException("Пользователь не найден");
     }
 
-    const qr = await this.totpService.generateSecret(user.id);
-    await this.userService.setIsTwoFactorEnabled(user.id, true);
+    if (user.isTwoFactorEnabled) {
+      throw new BadRequestException("Двухфакторная аутентификация включена");
+    }
 
-    return { qr };
+    await this.totpService.deleteSecret(user.id);
+
+    return await this.totpService.generateSecret(user.id);
   }
 
-  async verify2FA(res: Response, dto: Verify2FADto) {
-    const { token, email } = dto;
+  async enable2FA(dto: Verify2FADto) {
+    const { userId, code } = dto;
 
-    const user = await this.userService.getByEmail(email);
+    const user = await this.userService.getById(userId);
 
     if (!user) {
       throw new NotFoundException("Пользователь не найден");
     }
 
-    await this.totpService.validateTotp(user.id, token);
+    await this.totpService.validateTotp(user.id, code);
+
+    await this.userService.setIsTwoFactorEnabled(user.id, true);
+
+    return { message: "Двухфакторная аутентификация включена" };
+  }
+
+  async verify2FA(res: Response, dto: Verify2FADto) {
+    const { userId, code } = dto;
+
+    const user = await this.userService.getById(userId);
+
+    if (!user) {
+      throw new NotFoundException("Пользователь не найден");
+    }
+
+    if (!user.isTwoFactorEnabled) {
+      throw new BadRequestException("Двухфакторная аутентификация выключена");
+    }
+
+    await this.totpService.validateTotp(user.id, code);
 
     return this.auth(res, user.id);
   }
 
-  async disable2FA(userId: string) {
+  async disable2FA(dto: Verify2FADto) {
+    const { userId, code } = dto;
+
     const user = await this.userService.getById(userId);
 
     if (!user) {
@@ -175,8 +200,9 @@ export class AuthService {
       );
     }
 
-    await this.userService.setIsTwoFactorEnabled(user.id, false);
+    await this.totpService.validateTotp(user.id, code);
     await this.totpService.deleteSecret(user.id);
+    await this.userService.setIsTwoFactorEnabled(user.id, false);
 
     return { message: "Двухфакторная аутентификация выключена" };
   }
@@ -226,7 +252,7 @@ export class AuthService {
     const emailDto: SendEmailDto = {
       recipients: [user.email],
       subject: "Подтверждение почты",
-      html: `Ваш одноразовый код для подтверждения email: ${otp}<br/><br/>Срок действия кода: 24 часа.`,
+      html: `Ваш одноразовый код для подтверждения email: <b>${otp}</b><br/><br/>Срок действия кода: 5 мин.`,
     };
 
     await this.emailService.sendEmail(emailDto);

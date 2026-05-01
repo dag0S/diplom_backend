@@ -40,8 +40,6 @@ model Consultation {
   id              String  @id @default(uuid())
   recommendations String?
   comments        String?
-  conferenceId    String? @map("conference_id")
-  conferenceUrl   String? @map("conference_url")
 
   doctorId String @map("doctor_id")
   doctor   User   @relation("DoctorConsultations", fields: [doctorId], references: [id])
