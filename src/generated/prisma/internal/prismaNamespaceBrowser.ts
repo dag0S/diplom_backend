@@ -94,8 +94,6 @@ export const ConsultationScalarFieldEnum = {
   id: 'id',
   recommendations: 'recommendations',
   comments: 'comments',
-  conferenceId: 'conferenceId',
-  conferenceUrl: 'conferenceUrl',
   doctorId: 'doctorId',
   patientId: 'patientId',
   createdAt: 'createdAt',

@@ -17,11 +17,11 @@ import { isDev } from "src/common/utils/is-dev.util";
 import { OtpService } from "src/otp/otp.service";
 import { EmailService } from "src/email/email.service";
 import { SendEmailDto } from "src/email/dto/email.dto";
-import type { User } from "src/generated/prisma/client";
+import type { Role, User } from "src/generated/prisma/client";
 import { VerifyOtpDto } from "./dto/verify-otp.dto";
 import { SendOtpDto } from "./dto/send-otp.dto";
 import { TotpService } from "src/totp/totp.service";
-import { Verify2FADto } from "./dto/verify-2fa.dto";
+import { Verify2FADto, Verify2FAEmailDto } from "./dto/verify-2fa.dto";
 
 @Injectable()
 export class AuthService {
@@ -52,14 +52,17 @@ export class AuthService {
     }
 
     if (!user.isEmailVerified) {
-      throw new UnauthorizedException("Почта не подтверждена");
+      await this.emailVerify(user);
+      throw new UnauthorizedException(
+        "Почта не подтверждена, код отправлен на почту",
+      );
     }
 
     if (user.isTwoFactorEnabled) {
       throw new UnauthorizedException("Включена двухфакторная аутентификация");
     }
 
-    return this.auth(res, user.id);
+    return this.auth(res, user.id, user.role);
   }
 
   async register(dto: RegisterDto) {
@@ -86,7 +89,7 @@ export class AuthService {
 
     await this.userService.verifyEmail(user.id);
 
-    return this.auth(res, user.id);
+    return this.auth(res, user.id, user.role);
   }
 
   async sendOtp(dto: SendOtpDto) {
@@ -100,7 +103,7 @@ export class AuthService {
   }
 
   async refresh(req: Request, res: Response) {
-    const refreshToken = req.cookies["refreshToken"] as string;
+    const refreshToken = req.cookies["refresh_token"] as string;
 
     if (!refreshToken) {
       throw new UnauthorizedException("Недействительный refresh токен");
@@ -126,7 +129,7 @@ export class AuthService {
       throw new NotFoundException("Пользователь не найден");
     }
 
-    return this.auth(res, user.id);
+    return this.auth(res, user.id, user.role);
   }
 
   logout(res: Response) {
@@ -167,10 +170,10 @@ export class AuthService {
     return { message: "Двухфакторная аутентификация включена" };
   }
 
-  async verify2FA(res: Response, dto: Verify2FADto) {
-    const { userId, code } = dto;
+  async verify2FA(res: Response, dto: Verify2FAEmailDto) {
+    const { email, code } = dto;
 
-    const user = await this.userService.getById(userId);
+    const user = await this.userService.getByEmail(email);
 
     if (!user) {
       throw new NotFoundException("Пользователь не найден");
@@ -182,7 +185,7 @@ export class AuthService {
 
     await this.totpService.validateTotp(user.id, code);
 
-    return this.auth(res, user.id);
+    return this.auth(res, user.id, user.role);
   }
 
   async disable2FA(dto: Verify2FADto) {
@@ -207,8 +210,8 @@ export class AuthService {
     return { message: "Двухфакторная аутентификация выключена" };
   }
 
-  private generateTokens(id: string) {
-    const payload: JwtPayload = { id };
+  private generateTokens(id: string, role: Role) {
+    const payload: JwtPayload = { id, role };
 
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: "1h",
@@ -225,7 +228,7 @@ export class AuthService {
   }
 
   private setCookie(res: Response, value: string, expires: Date) {
-    res.cookie("refreshToken", value, {
+    res.cookie("refresh_token", value, {
       httpOnly: true,
       domain: this.COOKIE_DOMAIN,
       expires,
@@ -234,8 +237,8 @@ export class AuthService {
     });
   }
 
-  private auth(res: Response, id: string) {
-    const { accessToken, refreshToken } = this.generateTokens(id);
+  private auth(res: Response, id: string, role: Role) {
+    const { accessToken, refreshToken } = this.generateTokens(id, role);
 
     this.setCookie(
       res,

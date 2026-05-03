@@ -214,17 +214,17 @@ export type OtpOrderByWithRelationInput = {
 
 export type OtpWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId?: string
   AND?: Prisma.OtpWhereInput | Prisma.OtpWhereInput[]
   OR?: Prisma.OtpWhereInput[]
   NOT?: Prisma.OtpWhereInput | Prisma.OtpWhereInput[]
   code?: Prisma.StringFilter<"Otp"> | string
   expiresAt?: Prisma.DateTimeFilter<"Otp"> | Date | string
   isUsed?: Prisma.BoolFilter<"Otp"> | boolean
+  userId?: Prisma.StringFilter<"Otp"> | string
   createdAt?: Prisma.DateTimeFilter<"Otp"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Otp"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userId">
+}, "id">
 
 export type OtpOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

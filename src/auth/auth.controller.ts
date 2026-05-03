@@ -16,7 +16,7 @@ import { VerifyOtpDto } from "./dto/verify-otp.dto";
 import { SendOtpDto } from "./dto/send-otp.dto";
 import { JwtAuth } from "./decorators/jwt-auth.decorator";
 import { CurrentUser } from "src/common/decorators/user.decorator";
-import { Verify2FADto } from "./dto/verify-2fa.dto";
+import { Verify2FADto, Verify2FAEmailDto } from "./dto/verify-2fa.dto";
 
 @Controller("auth")
 export class AuthController {
@@ -74,7 +74,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   verify2FA(
     @Res({ passthrough: true }) res: Response,
-    @Body() dto: Verify2FADto,
+    @Body() dto: Verify2FAEmailDto,
   ) {
     return this.authService.verify2FA(res, dto);
   }
