@@ -8,6 +8,13 @@ import { JwtAuth } from "src/auth/decorators/jwt-auth.decorator";
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get("doctors")
+  @HttpCode(HttpStatus.OK)
+  @JwtAuth("PATIENT")
+  getAllDoctors() {
+    return this.userService.getAllDoctors();
+  }
+
   @Get("profile")
   @HttpCode(HttpStatus.OK)
   @JwtAuth()

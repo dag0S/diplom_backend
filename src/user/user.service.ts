@@ -4,10 +4,26 @@ import { hash } from "argon2";
 import { RegisterDto } from "src/auth/dto/register.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import type { GetByIdOptions } from "./interfaces/get-by-id-options.interface";
+import { Role } from "src/generated/prisma/enums";
 
 @Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async getAllDoctors() {
+    return await this.prismaService.user.findMany({
+      where: {
+        role: Role.DOCTOR,
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        middleName: true,
+        role: true,
+      },
+    });
+  }
 
   async getById(id: string, options?: GetByIdOptions) {
     return await this.prismaService.user.findUnique({
