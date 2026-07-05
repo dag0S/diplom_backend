@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   HttpCode,
   HttpStatus,
   Post,
@@ -89,5 +90,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   logout(@Res({ passthrough: true }) res: Response) {
     return this.authService.logout(res);
+  }
+
+  @Delete("remove")
+  @HttpCode(HttpStatus.OK)
+  @JwtAuth()
+  remove(
+    @CurrentUser("id") id: string,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    return this.authService.remove(id, res);
   }
 }

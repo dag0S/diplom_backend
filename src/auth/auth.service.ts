@@ -262,4 +262,12 @@ export class AuthService {
 
     return { message: `Код подтверждения отправлен на почту ${user.email}` };
   }
+
+  async remove(userId: string, res: Response) {
+    await this.userService.remove(userId);
+
+    this.setCookie(res, "", new Date(0));
+
+    return { message: "Аккаунт успешно удален" };
+  }
 }

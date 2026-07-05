@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus } from "@nestjs/common";
+import { Controller, Delete, Get, HttpCode, HttpStatus } from "@nestjs/common";
 
 import { UserService } from "./user.service";
 import { CurrentUser } from "../common/decorators/user.decorator";

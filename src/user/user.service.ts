@@ -70,6 +70,12 @@ export class UserService {
     });
   }
 
+  async remove(userId: string) {
+    await this.prismaService.user.delete({
+      where: { id: userId },
+    });
+  }
+
   async verifyEmail(userId: string) {
     await this.prismaService.user.update({
       where: { id: userId },
